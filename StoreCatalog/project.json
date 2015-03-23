@@ -12,12 +12,16 @@
         "**.vspscc"
     ],
     "dependencies": {
-        "Microsoft.AspNet.Server.IIS": "1.0.0-beta2",
-        "Microsoft.AspNet.Mvc": "6.0.0-beta2",
-        "xunit": "1.9.2"
+        "Microsoft.AspNet.Hosting": "1.0.0-*",
+        "Microsoft.AspNet.Server.WebListener": "1.0.0-*",
+        "Microsoft.AspNet.Mvc": "6.0.0-*",
+        "Microsoft.AspNet.Diagnostics": "1.0.0-*",
+        "Kestrel": "1.0.0-*"
     },
     "frameworks" : {
-        "aspnet50" : { },
-        "aspnetcore50" : { }
+        "dnx451" : { }
+    },
+    "commands": {
+      "run": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:3000"
     }
 }
