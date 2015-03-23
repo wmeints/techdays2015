@@ -1,0 +1,5 @@
+artifacts/
+*.kproj
+[Bb]in/
+[Dd]ebug/
+*.dll
