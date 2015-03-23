@@ -19,6 +19,9 @@ Vagrant.configure(2) do |config|
     v.cpus = 2
   end
 
+  # Expose port 3000 for the StoreCatalog service
+  config.vm.network "forwarded_port", guest: 3000, host: 3000
+
   # This first script installs the basics needed to get the box in shape
   # for running ASP.NET 5 + the latest version of mono. This script also
   # includes a few basic things that you need to edit the source files.
@@ -47,12 +50,25 @@ Vagrant.configure(2) do |config|
     # Clone the sources and build them
     git clone https://github.com/mono/mono.git ~/mono
     cd ~/mono
-    ./autogen.sh --prefix=$PREFIX
+    ./autogen.sh --prefix=/usr/local
     make
-    make install
+    sudo make install
     cd ~/
 
-    # We're wildly optimistic with this machine, let's run the latest bits!
+    # Clone the sources for libuv (Needed by Kestrel) and build them
+    git clone https://github.com/libuv/libuv.git ~/libuv
+    cd ~/libuv
+    sh autogen.sh
+    ./configure
+    make
+    sudo make install
+    sudo ldconfig
+
+    # Set the PATH so that the locally compiled mono binaries are
+    # detected before the ones we installed before.
+    export PATH=/usr/local/bin:$PATH
+
+    # Load the dnvm stuff and get the latest runtime for the application
     curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh; dnvm upgrade
   SHELL
 end
