@@ -1,23 +1,7 @@
-'use strict';
+(function(angular) {
+  'use strict';
 
-/**
- * @ngdoc overview
- * @name cloudyBooksApp
- * @description
- * # cloudyBooksApp
- *
- * Main module of the application.
- */
-angular
-  .module('cloudyBooksApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch'
-  ])
-  .config(function ($routeProvider) {
+  function configure($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -47,4 +31,18 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }
+
+  configure.$inject = ['$routeProvider'];
+
+  angular.module('cloudyBooksApp', [
+    'ngAnimate',
+    'ngCookies',
+    'ngResource',
+    'ngRoute',
+    'ngSanitize',
+    'ngTouch'
+  ]);
+
+  angular.module('cloudyBooksApp').config(configure);
+})(angular);

@@ -1,9 +1,11 @@
-'use strict';
+(function(angular) {
+  'use strict';
 
-function ShoppingCartCtrl() {
+  function ShoppingCartCtrl() {
 
-}
+  }
 
-ShoppingCartCtrl.$inject = [];
+  ShoppingCartCtrl.$inject = [];
 
-angular.module('cloudyBooksApp').controller('ShoppingcartCtrl', ShoppingCartCtrl);
+  angular.module('cloudyBooksApp').controller('ShoppingcartCtrl', ShoppingCartCtrl);  
+})(angular);

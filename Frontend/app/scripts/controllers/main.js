@@ -1,9 +1,11 @@
-'use strict';
+(function(angular) {
+  'use strict';
 
-function MainCtrl() {
+  function MainCtrl() {
 
-}
+  }
 
-MainCtrl.$inject = [];
+  MainCtrl.$inject = [];
 
-angular.module('cloudyBooksApp').controller('MainCtrl', MainCtrl);
+  angular.module('cloudyBooksApp').controller('MainCtrl', MainCtrl);  
+})(angular);

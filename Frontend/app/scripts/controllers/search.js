@@ -1,11 +1,13 @@
-'use strict';
+(function(angular) {
+  'use strict';
 
-function SearchCtrl($routeParams) {
-    var vm = this;
+  function SearchCtrl($routeParams) {
+      var vm = this;
 
-    vm.searchQuery = $routeParams.query;
-}
+      vm.searchQuery = $routeParams.query;
+  }
 
-SearchCtrl.$inject = ['$routeParams'];
+  SearchCtrl.$inject = ['$routeParams'];
 
-angular.module('cloudyBooksApp').controller('SearchCtrl',SearchCtrl);
+  angular.module('cloudyBooksApp').controller('SearchCtrl',SearchCtrl);  
+})(angular);

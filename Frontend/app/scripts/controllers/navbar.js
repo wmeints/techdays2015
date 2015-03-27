@@ -1,13 +1,15 @@
-'use strict';
+(function(angular) {
+  'use strict';
 
-function NavbarCtrl($location) {
-  var vm = this;
+  function NavbarCtrl($location) {
+    var vm = this;
 
-  vm.isActive = function(location) {
-    return location === $location.path();
-  };
-}
+    vm.isActive = function(location) {
+      return location === $location.path();
+    };
+  }
 
-NavbarCtrl.$inject = ['$location'];
+  NavbarCtrl.$inject = ['$location'];
 
-angular.module('cloudyBooksApp').controller('NavbarCtrl', NavbarCtrl);
+  angular.module('cloudyBooksApp').controller('NavbarCtrl', NavbarCtrl);  
+})(angular);
