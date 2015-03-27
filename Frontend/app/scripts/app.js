@@ -20,7 +20,7 @@
       })
       .when('/shopping-cart', {
         templateUrl: 'views/shoppingcart.html',
-        controller: 'ShoppingCartCtrl',
+        controller: 'ShoppingcartCtrl',
         controllerAs: 'vm'
       })
       .when('/about', {

@@ -1,11 +1,11 @@
 (function(angular) {
   'use strict';
 
-  function ShoppingCartCtrl() {
+  function ShoppingcartCtrl() {
 
   }
 
-  ShoppingCartCtrl.$inject = [];
+  ShoppingcartCtrl.$inject = [];
 
-  angular.module('cloudyBooksApp').controller('ShoppingcartCtrl', ShoppingCartCtrl);  
+  angular.module('cloudyBooksApp').controller('ShoppingcartCtrl', ShoppingcartCtrl);
 })(angular);
