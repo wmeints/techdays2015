@@ -34,6 +34,11 @@ angular
         controller: 'SearchCtrl',
         controllerAs: 'vm'
       })
+      .when('/shopping-cart', {
+        templateUrl: 'views/shoppingcart.html',
+        controller: 'ShoppingCartCtrl',
+        controllerAs: 'vm'
+      })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
