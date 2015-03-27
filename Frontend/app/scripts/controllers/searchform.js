@@ -5,7 +5,7 @@ function SearchFormCtrl($location) {
 
   vm.searchQuery = '';
   vm.search = function() {
-    $location.path('/search?query=' + vm.searchQuery);
+    $location.path('/search').search({ query: vm.searchQuery });
   };
 }
 
