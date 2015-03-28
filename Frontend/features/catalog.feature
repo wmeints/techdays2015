@@ -8,12 +8,7 @@ Scenario: Browse top 10
   When I select top 10
   Then I see the top 10 books
 
-Scenario: Browse by author
+Scenario: Browse azure books
   Given I am browsing the catalog
-  When I select by author
-  Then I see the books sorted by author
-
-Scenario: Browse by title
-  Given I am browsing the catalog
-  When I select by title
-  Then I see the books sorted by title
+  When I select azure
+  Then I see the azure books
