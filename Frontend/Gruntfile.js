@@ -419,6 +419,12 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+
+    shell: {
+      protractor: {
+        command: 'protractor protractor.conf.js'
+      }
     }
   });
 
@@ -451,6 +457,8 @@ module.exports = function (grunt) {
     'connect:test',
     'karma'
   ]);
+
+  grunt.registerTask('features', ['shell:protractor']);
 
   grunt.registerTask('build', [
     'clean:dist',

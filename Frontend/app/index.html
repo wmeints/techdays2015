@@ -37,16 +37,16 @@
         <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
           <ul class="nav navbar-nav">
-            <li ng-class="{ active: navbar.isActive('/') }"><a href="#/">Home</a></li>
-            <li ng-class="{ active: navbar.isActive('/catalog') }"><a ng-href="#/catalog">Catalog</a></li>
-            <li ng-class="{ active: navbar.isActive('/shopping-cart') }"><a ng-href="#/shopping-cart">Shopping cart</a></li>
+            <li class="nav-item" ng-class="{ active: navbar.isActive('/') }"><a href="#/">Home</a></li>
+            <li class="nav-item" ng-class="{ active: navbar.isActive('/catalog') }"><a ng-href="#/catalog">Catalog</a></li>
+            <li class="nav-item" ng-class="{ active: navbar.isActive('/shopping-cart') }"><a ng-href="#/shopping-cart">Shopping cart</a></li>
           </ul>
 
           <form ng-controller="SearchFormCtrl as vm" ng-submit="vm.search()" class="navbar-form navbar-right">
             <div class="form-group">
-              <input type="text" placeholder="Search for books" ng-model="vm.searchQuery" class="form-control">
+              <input type="text" id="search-form-query" placeholder="Search for books" ng-model="vm.searchQuery" class="form-control">
             </div>
-            <button class="btn btn-default" type="submit">Search</button>
+            <button class="btn btn-default" id="search-form-submit" type="submit">Search</button>
           </form>
         </div>
       </div>
