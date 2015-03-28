@@ -11,7 +11,7 @@ var steps = function() {
       assert(result !== null);
 
       result.getText().then(function(text) {
-        assert(text.trim().toLowerCase() === link.trim().toLowerCase())
+        assert(text.trim().toLowerCase() === link.trim().toLowerCase());
         callback();
       });
     });
