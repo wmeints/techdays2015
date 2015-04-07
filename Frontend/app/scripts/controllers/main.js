@@ -1,0 +1,11 @@
+(function(angular) {
+  'use strict';
+
+  function MainCtrl() {
+
+  }
+
+  MainCtrl.$inject = [];
+
+  angular.module('cloudyBooksApp').controller('MainCtrl', MainCtrl);  
+})(angular);
