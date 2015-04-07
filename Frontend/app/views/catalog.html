@@ -5,9 +5,7 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <h2>Browse our catalog</h2>
-    <p>We've got a number of interesting books on cloud technology.
-      Can't find what you are looking for? Bummer!</p>
+    <h2>{{vm.section.title}}</h2>
   </div>
 </div>
 
@@ -20,7 +18,8 @@
     </ul>
   </div>
   <div class="col-sm-9">
-    <h3>{{vm.section.title}}</h3>
-    //TODO: Display books in this section of the catalog
+    <div ng-repeat="book in vm.items">
+      <strong>{{book.title}}</strong>
+    </div>
   </div>
 </div>

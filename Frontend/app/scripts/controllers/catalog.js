@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  function CatalogCtrl() {
+  function CatalogCtrl(StoreCatalog) {
     var vm = this;
 
     vm.section = {
@@ -11,14 +11,18 @@
 
     vm.browseTopTen = function() {
       //TODO: retrieve items from server
+      vm.items = [];
       vm.section.title = 'Top 10 most popular books';
       vm.section.name = 'top-ten';
     };
 
     vm.browseAzure = function() {
-      //TODO: Retrieve items from the server
-      vm.section.title = 'Azure books';
-      vm.section.name = 'azure';
+
+      StoreCatalog.findByCategory('azure',0).then(function(result) {
+        vm.items = result.data.items;
+        vm.section.title = 'Azure books';
+        vm.section.name = 'azure';
+      });
     };
 
     vm.isActive = function(section) {
@@ -28,7 +32,7 @@
     vm.browseTopTen();
   }
 
-  CatalogCtrl.$inject = [];
+  CatalogCtrl.$inject = ['StoreCatalog'];
 
   angular.module('cloudyBooksApp').controller('CatalogCtrl', CatalogCtrl);
 })(angular);
