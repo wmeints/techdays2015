@@ -6,7 +6,8 @@
 		"Microsoft.AspNet.Mvc": "6.0.0-beta3",
 		"Microsoft.AspNet.Server.WebListener": "1.0.0-beta3",
 		"Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta3",
-		"MongoDB.Driver": "2.0.0"
+		"MongoDB.Driver": "2.0.0",
+		"Newtonsoft.Json": "7.0.1-beta2"
 	},
 	"commands":{
 		"web":"Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:3001",

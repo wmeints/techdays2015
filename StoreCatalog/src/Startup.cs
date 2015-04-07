@@ -6,6 +6,14 @@ using Microsoft.Framework.ConfigurationModel;
 namespace Catalog {
 	public class Startup {
 		public void Configure(IApplicationBuilder app) {
+			// Enable CORS support for the frontend
+			app.Use((context, next) => {
+				context.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+				context.Response.Headers.Add("Access-Control-Allow-Headers", new [] { "Content-Type", "Accept" });
+
+				return next();
+			});
+
 			app.UseErrorPage();
 			app.UseMvc();
 			app.UseWelcomePage();
@@ -17,8 +25,6 @@ namespace Catalog {
 
 			services.AddMvc();
 
-			// When asked for a IBookRepository,
-			// return a new book repository based on the mongo connection settings.
 			services.AddScoped<IBookRepository>(provider => {
 				var serverName = configuration.Get("Mongo:Server");
 				var databaseName = configuration.Get("Mongo:Database");

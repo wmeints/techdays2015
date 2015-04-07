@@ -5,10 +5,17 @@ using Microsoft.AspNet.Mvc;
 namespace Catalog {
   [Route("/api/books/")]
   public class BooksController: Controller {
-    private IBookRepository _repository;
+    private readonly IBookRepository _repository;
 
     public BooksController(IBookRepository repository) {
       _repository = repository;
+    }
+
+    [HttpGet]
+    [Route("category/{categoryName}")]
+    public Task<PagedResultSet<Book>> GetByCategory(string categoryName, int pageIndex) {
+      var books = _repository.FindByCategory(categoryName, pageIndex, 30);
+      return books;
     }
 
     [HttpGet]

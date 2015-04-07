@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using MongoDB;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 
 namespace Catalog {
     public interface IBookRepository {
       Task<PagedResultSet<Book>> FindAll(int pageIndex, int pageSize);
+      Task<PagedResultSet<Book>> FindByCategory(string category, int pageIndex, int pageSize);
       Task<Book> FindById(String bookId);
       Task<Book> Insert(Book book);
       Task<Book> Update(Book book);
@@ -34,6 +36,13 @@ namespace Catalog {
 
       public Task<Book> FindById(String id) {
         return _collection.Find(book => book.Id == ObjectId.Parse(id)).FirstOrDefaultAsync();
+      }
+
+      public async Task<PagedResultSet<Book>> FindByCategory(string category, int pageIndex, int pageSize) {
+        var records = await _collection.Find(book => book.Genre == category).Skip(pageIndex).Limit(pageSize).ToListAsync();
+        var itemCount = await _collection.CountAsync(book => book.Genre == category);
+
+        return new PagedResultSet<Book>(records, pageIndex, pageSize, itemCount);
       }
 
       public async Task<Book> Insert(Book book) {

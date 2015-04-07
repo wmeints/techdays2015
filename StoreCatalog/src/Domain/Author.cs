@@ -1,5 +1,6 @@
 using System;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 
 namespace Catalog {
   public class Author {
@@ -12,7 +13,10 @@ namespace Catalog {
       this.Biography = biography;
     }
 
+    [JsonProperty("name")]
     public String Name { get; set; }
+
+    [JsonProperty("biography")]
     public String Biography { get; set; }
   }
 }
