@@ -1,81 +1,78 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
-using System.Collections.Generic;
-using StoreCatalog.Models;
-using StoreCatalog.Repositories;
-using StoreCatalog.ViewModels;
-using System.Linq;
-using StoreCatalog.Services;
 
-namespace StoreCatalog.Controllers
-{
-    [Route("api/books/{id}")]
-    public class BooksController : Controller
-    {
-        private ICatalogService _catalogService;
+namespace Catalog {
+  [Route("/api/books/")]
+  public class BooksController: Controller {
+    private IBookRepository _repository;
 
-        /// <summary>
-        /// Retrieves a single item from the catalog
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]   
-        public IActionResult Get(int id)
-        {
-            var book = _catalogService.FindByArticleNumber(id);
-
-            if(book == null)
-            {
-                return RenderBookNotFoundError();
-            }
-
-            return Json(book);
-        }
-        
-        [HttpPost]
-        public IActionResult Post([FromBody]CreateBookRequestData data)
-        {
-            if(!ModelState.IsValid)
-            {
-                Context.Response.StatusCode = 400;
-                return Json(this.ModelState.Values);
-            }
-
-            return Json(_catalogService.Create(data));
-        }
-
-        [HttpPut]
-        public IActionResult Put(int id, [FromBody] UpdateBookRequestData data)
-        {
-            var book = _catalogService.Update(id, data);
-
-            if(book == null)
-            {
-                return RenderBookNotFoundError();
-            }
-            
-            return Json(book);
-        }
-
-        [HttpDelete]
-        public IActionResult Delete(int id)
-        {
-            if(!_catalogService.Remove(id))
-            {
-                return RenderBookNotFoundError();
-            }
-
-            return new NoContentResult();
-        }
-
-        private IActionResult RenderBookNotFoundError()
-        {
-            Context.Response.StatusCode = 404;
-
-            return Json(new
-            {
-                message = "We could not find the book you requested."
-            });
-        }
+    public BooksController(IBookRepository repository) {
+      _repository = repository;
     }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<Object> Get(string id) {
+      var book = await _repository.FindById(id);
+
+      if(book == null) {
+        Context.Response.StatusCode = 404;
+
+        return new {
+          message = "The specified book could not be found"
+        };
+      }
+
+      return book;
+    }
+
+    [HttpPost]
+    public async Task<Object> Post([FromBody] CreateBookData data) {
+      var book = new Book(data.Title, data.Description, data.Genre, data.Author, data.PublicationDate);
+      return await _repository.Insert(book);
+    }
+
+    [HttpPut]
+    [Route("{id}")]
+    public async Task<Object> Put(string id, [FromBody] UpdateBookData data) {
+      var book = await _repository.FindById(id);
+
+      if(book == null) {
+        Context.Response.StatusCode = 404;
+
+        return new {
+          message = "The specified book could not be found"
+        };
+      }
+
+      book.Title = data.Title;
+      book.Description = data.Description;
+      book.Genre = data.Genre;
+      book.Author = data.Author;
+      book.PublicationDate = data.PublicationDate;
+
+      return await _repository.Update(book);
+    }
+
+    [HttpDelete]
+    [Route("{id}")]
+    public async Task<Object> Delete(string id) {
+      var book = await _repository.FindById(id);
+
+      if(book == null) {
+        Context.Response.StatusCode = 404;
+
+        return new {
+          message = "The specified book could not be found"
+        };
+      }
+
+      await _repository.Remove(book);
+
+      Context.Response.StatusCode = 204;
+
+      return null;
+    }
+  }
 }

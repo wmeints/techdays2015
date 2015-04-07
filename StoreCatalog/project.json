@@ -1,27 +1,17 @@
-﻿{
-    "webroot": "wwwroot",
-    "version": "1.0.0-*",
-    "exclude": [
-        "wwwroot"
-    ],
-    "packExclude": [
-        "node_modules",
-        "bower_components",
-        "**.kproj",
-        "**.user",
-        "**.vspscc"
-    ],
-    "dependencies": {
-        "Microsoft.AspNet.Hosting": "1.0.0-*",
-        "Microsoft.AspNet.Server.WebListener": "1.0.0-*",
-        "Microsoft.AspNet.Mvc": "6.0.0-*",
-        "Microsoft.AspNet.Diagnostics": "1.0.0-*",
-        "Kestrel": "1.0.0-*"
-    },
-    "frameworks" : {
-        "dnx451" : { }
-    },
-    "commands": {
-      "run": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:3000"
-    }
+{
+	"dependencies": {
+		"Microsoft.AspNet.Diagnostics": "1.0.0-*",
+		"Microsoft.AspNet.Hosting": "1.0.0-*",
+		"Microsoft.AspNet.Mvc": "6.0.0-*",
+		"Microsoft.AspNet.Server.WebListener": "1.0.0-*",
+		"Microsoft.Framework.ConfigurationModel.Json": "1.0.0-*",
+		"MongoDB.Driver": "2.0.0"
+	},
+	"commands":{
+		"web":"Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:3001"
+	},
+	"frameworks":{
+		"dnx451": {},
+		"dnxcore451": {}
+	}
 }
