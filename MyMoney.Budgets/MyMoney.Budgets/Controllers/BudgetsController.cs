@@ -23,9 +23,9 @@ namespace MyMoney.Budgets.Controllers
         /// Initializes a new instance of <see cref="BudgetsController"/>
         /// </summary>
         /// <param name="budgetRepository"></param>
-        public BudgetsController(IBudgetRepository budgetRepository)
+        public BudgetsController()
         {
-            _budgetRepository = budgetRepository;
+            _budgetRepository = new BudgetRepository();
         }
 
         /// <summary>

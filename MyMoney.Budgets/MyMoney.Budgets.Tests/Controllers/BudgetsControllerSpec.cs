@@ -23,7 +23,7 @@ namespace MyMoney.Budgets.Tests.Controllers
         public BudgetsControllerSpec()
         {
             budgetRepositoryMock = new Mock<IBudgetRepository>();
-            controller = new BudgetsController(budgetRepositoryMock.Object);
+            controller = new BudgetsController();
 
             controller.ControllerContext = new Mock<HttpControllerContext>().Object;
             controller.Configuration = new HttpConfiguration();

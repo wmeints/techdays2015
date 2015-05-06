@@ -18,6 +18,12 @@ namespace MyMoney.Budgets.Controllers
         private IBudgetRepository _budgetRepository;
         private IMutationRepository _mutationRepository;
 
+        public MutationsController()
+        {
+            _budgetRepository = new BudgetRepository();
+            _mutationRepository = new MutationRepository();
+        }
+
         [Route("{year}/{month}")]
         [ResponseType(typeof(FindMutationsResponse))]
         [SwaggerResponse(HttpStatusCode.NotFound, Description = "Budget not found",Type = typeof(GenericErrorResponse))]

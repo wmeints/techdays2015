@@ -9,7 +9,7 @@
             Manage budgets
             </summary>
         </member>
-        <member name="M:MyMoney.Budgets.Controllers.BudgetsController.#ctor(MyMoney.Budgets.Domain.IBudgetRepository)">
+        <member name="M:MyMoney.Budgets.Controllers.BudgetsController.#ctor">
             <summary>
             Initializes a new instance of <see cref="T:MyMoney.Budgets.Controllers.BudgetsController"/>
             </summary>

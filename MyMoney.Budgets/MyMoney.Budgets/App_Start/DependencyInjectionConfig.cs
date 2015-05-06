@@ -12,11 +12,10 @@ namespace MyMoney.Budgets
     {
         public static void Register(HttpConfiguration configuration)
         {
-            var container = new UnityContainer();
+            //var container = new UnityContainer();
 
-            container.RegisterType<IBudgetRepository, BudgetRepository>();
-            
-            configuration.DependencyResolver = new UnityResolver(container);
+            //container.RegisterType<IBudgetRepository, BudgetRepository>();
+            //configuration.DependencyResolver = new UnityResolver(container);
         }
     }
 }
