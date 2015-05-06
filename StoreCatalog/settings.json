@@ -1,6 +1,0 @@
-{
-	"Mongo": {
-		"Server": "localhost",
-		"Database": "catalog-test"
-	}
-}
