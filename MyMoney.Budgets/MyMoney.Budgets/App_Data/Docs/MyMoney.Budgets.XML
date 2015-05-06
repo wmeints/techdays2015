@@ -101,11 +101,6 @@
             Automatically close one open shared connection 
             </summary>
         </member>
-        <member name="P:PetaPoco.Database.KeepConnectionAlive">
-            <summary>
-            When set to true the first opened connection is kept alive until this object is disposed
-            </summary>
-        </member>
         <member name="M:PetaPoco.Database.OpenSharedConnection">
             <summary>
             Open a connection that will be used for all subsequent queries.
@@ -117,11 +112,6 @@
         <member name="M:PetaPoco.Database.CloseSharedConnection">
             <summary>
             Releases the shared connection
-            </summary>
-        </member>
-        <member name="P:PetaPoco.Database.Connection">
-            <summary>
-            Provides access to the currently open shared connection (or null if none)
             </summary>
         </member>
         <member name="M:PetaPoco.Database.GetTransaction">
@@ -1042,21 +1032,6 @@
             <param name="args">Arguments to any embedded parameters in the SQL</param>
             <returns>A collection of POCO's as an IEnumerable</returns>
         </member>
-        <member name="P:PetaPoco.Database.LastSQL">
-            <summary>
-            Retrieves the SQL of the last executed statement
-            </summary>
-        </member>
-        <member name="P:PetaPoco.Database.LastArgs">
-            <summary>
-            Retrieves the arguments to the last execute statement
-            </summary>
-        </member>
-        <member name="P:PetaPoco.Database.LastCommand">
-            <summary>
-            Returns a formatted string describing the last executed SQL statement and it's argument values
-            </summary>
-        </member>
         <member name="M:PetaPoco.Database.FormatCommand(System.Data.IDbCommand)">
             <summary>
             Formats the contents of a DB command for display
@@ -1071,6 +1046,31 @@
             <param name="sql"></param>
             <param name="args"></param>
             <returns></returns>
+        </member>
+        <member name="P:PetaPoco.Database.KeepConnectionAlive">
+            <summary>
+            When set to true the first opened connection is kept alive until this object is disposed
+            </summary>
+        </member>
+        <member name="P:PetaPoco.Database.Connection">
+            <summary>
+            Provides access to the currently open shared connection (or null if none)
+            </summary>
+        </member>
+        <member name="P:PetaPoco.Database.LastSQL">
+            <summary>
+            Retrieves the SQL of the last executed statement
+            </summary>
+        </member>
+        <member name="P:PetaPoco.Database.LastArgs">
+            <summary>
+            Retrieves the arguments to the last execute statement
+            </summary>
+        </member>
+        <member name="P:PetaPoco.Database.LastCommand">
+            <summary>
+            Returns a formatted string describing the last executed SQL statement and it's argument values
+            </summary>
         </member>
         <member name="P:PetaPoco.Database.EnableAutoSelect">
             <summary>
@@ -1152,6 +1152,13 @@
             however also be returned from the IMapper interface to provide your owning bindings between the DB and your POCOs.
             </remarks>
         </member>
+        <member name="M:PetaPoco.ColumnInfo.FromProperty(System.Reflection.PropertyInfo)">
+            <summary>
+            Creates and populates a ColumnInfo from the attributes of a POCO property.
+            </summary>
+            <param name="pi">The property whose column info is required</param>
+            <returns>A ColumnInfo instance</returns>
+        </member>
         <member name="P:PetaPoco.ColumnInfo.ColumnName">
             <summary>
             The SQL name of the column
@@ -1167,13 +1174,6 @@
             True if time and date values returned through this column should be forced to UTC DateTimeKind. (no conversion is applied - the Kind of the DateTime property
             is simply set to DateTimeKind.Utc instead of DateTimeKind.Unknown.
             </summary>
-        </member>
-        <member name="M:PetaPoco.ColumnInfo.FromProperty(System.Reflection.PropertyInfo)">
-            <summary>
-            Creates and populates a ColumnInfo from the attributes of a POCO property.
-            </summary>
-            <param name="pi">The property whose column info is required</param>
-            <returns>A ColumnInfo instance</returns>
         </member>
         <member name="T:PetaPoco.IMapper">
             <summary>
@@ -1323,23 +1323,6 @@
             <param name="sql">The SQL statement or fragment</param>
             <param name="args">Arguments to any parameters embedded in the SQL</param>
         </member>
-        <member name="P:PetaPoco.Sql.Builder">
-            <summary>
-            Instantiate a new SQL Builder object.  Weirdly implemented as a property but makes
-            for more elegantly readble fluent style construction of SQL Statements
-            eg: db.Query(Sql.Builder.Append(....))
-            </summary>
-        </member>
-        <member name="P:PetaPoco.Sql.SQL">
-            <summary>
-            Returns the final SQL statement represented by this builder
-            </summary>
-        </member>
-        <member name="P:PetaPoco.Sql.Arguments">
-            <summary>
-            Gets the complete, final set of arguments collected by this builder.
-            </summary>
-        </member>
         <member name="M:PetaPoco.Sql.Append(PetaPoco.Sql)">
             <summary>
             Append another SQL builder instance to the right-hand-side of this SQL builder
@@ -1399,6 +1382,23 @@
             <param name="table">The name of the table to join</param>
             <returns>A reference an SqlJoinClause through which the join condition can be specified</returns>
         </member>
+        <member name="P:PetaPoco.Sql.Builder">
+            <summary>
+            Instantiate a new SQL Builder object.  Weirdly implemented as a property but makes
+            for more elegantly readble fluent style construction of SQL Statements
+            eg: db.Query(Sql.Builder.Append(....))
+            </summary>
+        </member>
+        <member name="P:PetaPoco.Sql.SQL">
+            <summary>
+            Returns the final SQL statement represented by this builder
+            </summary>
+        </member>
+        <member name="P:PetaPoco.Sql.Arguments">
+            <summary>
+            Gets the complete, final set of arguments collected by this builder.
+            </summary>
+        </member>
         <member name="T:PetaPoco.Sql.SqlJoinClause">
             <summary>
             The SqlJoinClause is a simple helper class used in the construction of SQL JOIN statements with the SQL builder
@@ -1436,6 +1436,13 @@
             Use by IMapper to override table bindings for an object
             </summary>
         </member>
+        <member name="M:PetaPoco.TableInfo.FromPoco(System.Type)">
+            <summary>
+            Creates and populates a TableInfo from the attributes of a POCO
+            </summary>
+            <param name="t">The POCO type</param>
+            <returns>A TableInfo instance</returns>
+        </member>
         <member name="P:PetaPoco.TableInfo.TableName">
             <summary>
             The database table name
@@ -1455,13 +1462,6 @@
             <summary>
             The name of the sequence used for auto-incrementing Oracle primary key fields
             </summary>
-        </member>
-        <member name="M:PetaPoco.TableInfo.FromPoco(System.Type)">
-            <summary>
-            Creates and populates a TableInfo from the attributes of a POCO
-            </summary>
-            <param name="t">The POCO type</param>
-            <returns>A TableInfo instance</returns>
         </member>
         <member name="T:PetaPoco.Transaction">
             <summary>
