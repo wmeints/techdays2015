@@ -1,0 +1,26 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+#income-sources .progress {
+    margin-bottom: 10px;
+}
+
+#income-sources .progress + label {
+    font-weight: normal;
+}
+
+.totals .category-title, .totals .category-title {
+    display: inline-block;
+    float: left;
+}
+
+.totals .category-value {
+    text-align: right;
+    float: right;    
+}
+
+.enter-mutation-form #description {
+    width: 560px;
+}
