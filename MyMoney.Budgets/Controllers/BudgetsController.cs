@@ -12,7 +12,7 @@ namespace MyMoney.Budgets.Controllers {
 	/// <summary>
 	/// Manages budgets for the user
 	/// </summary>
-	[Route("api/[controller]/")]
+	[Route("api/budget/categories")]
 	public class BudgetsController: ControllerBase {
 		private IBudgetRepository _budgetRepository;
 		private ILogger _logger;
@@ -23,18 +23,15 @@ namespace MyMoney.Budgets.Controllers {
 		}
 
 		[HttpGet]
-		public async Task<FindBudgetsResponse> FindAll() {
-			var budgets = await _budgetRepository.FindAll();
-
-			 return new FindBudgetsResponse(budgets.Select(budget => new BudgetData(
-				 budget.Id.ToString(),budget.Description, budget.MaxAmountAvailable)));
+		public async Task<object> FindAll() {
+			return await _budgetRepository.FindAll();
 		}
 
 		[HttpGet("{id}")]
 		public Task<object> FindById(string id) {
 			return WithValidator(() => ValidateFindBudgetRequest(id), async () => {
-				return await WithEntity(() => _budgetRepository.FindById(id),budget => {
-					var response = new FindBudgetResponse(budget.Id.ToString(), budget.Description, budget.MaxAmountAvailable);
+				return await WithEntity(() => _budgetRepository.FindById(id), budget => {
+					var response = new BudgetData(budget.Id.ToString(), budget.Description, budget.MaxAmountAvailable);
 					return Task.FromResult((object)response);
 				});
 			});
@@ -47,7 +44,10 @@ namespace MyMoney.Budgets.Controllers {
 					budget.Description = request.Description;
 					budget.MaxAmountAvailable = request.MaxAmountAvailable;
 
-					return await _budgetRepository.Update(budget);
+					var updatedBudget = await _budgetRepository.Update(budget);
+					
+					return new BudgetData(updatedBudget.Id.ToString(), 
+						updatedBudget.Description, updatedBudget.MaxAmountAvailable);
 				});
 			});
 		}

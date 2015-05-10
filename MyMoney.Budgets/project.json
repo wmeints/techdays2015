@@ -11,7 +11,8 @@
     "Kestrel": "1.0.0-beta4",
     "MongoDB.Driver": "2.0.0",
     "MongoDB.Bson": "2.0.0",
-    "Microsoft.AspNet.Diagnostics": "1.0.0-beta4"
+    "Microsoft.AspNet.Diagnostics": "1.0.0-beta4",
+    "Microsoft.AspNet.Cors": "1.0.0-beta4"
   },
   "commands": {
     "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:3001",

@@ -6,6 +6,7 @@ using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Routing;
+using Microsoft.AspNet.Cors;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.ConfigurationModel;
 using MyMoney.Budgets.Utilities;
@@ -31,7 +32,7 @@ namespace MyMoney.Budgets
         // Configure is called after ConfigureServices is called.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            // Add MVC to the request pipeline.
+            app.UseCors(policy => policy.WithOrigins("*"));
             app.UseErrorPage();
             app.UseMvc();
         }
