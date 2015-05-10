@@ -1,3 +1,6 @@
+using System;
+using Newtonsoft.Json;
+
 namespace MyMoney.Budgets.Messages {
 	public class BudgetData {
 		
@@ -7,8 +10,13 @@ namespace MyMoney.Budgets.Messages {
 			this.MaxAmountAvailable = maxAmountAvailable;
 		}
 		
+		[JsonProperty("id")]
 		public string Id { get; set; }
+		
+		[JsonProperty("description")]
 		public string Description { get; set; }
+		
+		[JsonProperty("maxAmountAvailable")]
 		public double MaxAmountAvailable { get; set; }
 	}
 }
