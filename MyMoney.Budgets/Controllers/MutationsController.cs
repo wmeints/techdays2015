@@ -33,13 +33,15 @@ namespace MyMoney.Budgets.Controllers {
 						Description = request.Description,
 						Amount = request.Amount	
 					});
+					
+					//TODO: Publish mutation on the service bus
 						
 					return Task.FromResult((object)"OK");	
 				});
 			});
 		}
 		
-		[HttpPost("budgets/{id}/mutations")]
+		[HttpPost("budget/categories/{id}/mutations")]
 		public async Task<object> CreateBudgetMutation(string id, CreateBudgetMutationRequest request) {
 			return await WithValidator(() => ValidateCreateBudgetMutation(request), async () => {
 				return await WithEntity(() => _budgetRepository.FindById(id), async budget => {
@@ -49,6 +51,8 @@ namespace MyMoney.Budgets.Controllers {
 						Description = request.Description,
 						Amount = request.Amount	
 					});
+					
+					//TODO: Publish mutation on the service bus
 					
 					return Task.FromResult((object)"OK");	
 				});
