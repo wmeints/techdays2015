@@ -1,26 +1,38 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
 }
 
-#income-sources .progress {
-    margin-bottom: 10px;
+.budget-indicator .progress {
+  margin-bottom: 10px;
+}
+.budget-indicator .progress + label {
+  font-weight: normal;
 }
 
-#income-sources .progress + label {
-    font-weight: normal;
+.income-indicator .progress {
+  margin-bottom: 10px;
+}
+.income-indicator .progress + label {
+  font-weight: normal;
 }
 
-.totals .category-title, .totals .category-title {
-    display: inline-block;
-    float: left;
+.budget-totals .category-title {
+  display: inline-block;
+  float: left;
+}
+.budget-totals .category-value {
+  display: inline-block;
+  text-align: right;
+  float: right;
 }
 
-.totals .category-value {
-    text-align: right;
-    float: right;    
+.page-control {
+  margin-top: 30px;
 }
 
 .enter-mutation-form #description {
-    width: 560px;
+  width: 560px;
 }
+
+/*# sourceMappingURL=site.css.map */

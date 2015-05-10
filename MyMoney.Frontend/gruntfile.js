@@ -11,13 +11,24 @@ module.exports = function (grunt) {
                     cleanTargetDir: false
                 }
             }
+        },
+        sass: {
+            compile: {
+                options: {
+                    style: 'expanded'
+                },
+                files: {
+                    'wwwroot/css/site.css': 'sass/site.scss'
+                }
+            }
         }
     });
 
     // This command registers the default task which will install bower packages into wwwroot/lib
-    grunt.registerTask("default", ["bower:install"]);
+    grunt.registerTask("default", ["bower:install", "sass:compile"]);
 
     // The following line loads the grunt plugins.
     // This line needs to be at the end of this this file.
     grunt.loadNpmTasks("grunt-bower-task");
+    grunt.loadNpmTasks('grunt-contrib-sass');
 };

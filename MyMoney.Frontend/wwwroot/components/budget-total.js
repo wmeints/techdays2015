@@ -7,7 +7,7 @@ var BudgetTotal = React.createClass({displayName: "BudgetTotal",
     }.bind(this));
 
     return (
-      React.createElement("div", {className: "panel panel-default totals"}, 
+      React.createElement("div", {className: "panel panel-default budget-totals"}, 
           React.createElement("div", {className: "panel-body"}, 
               items, 
 

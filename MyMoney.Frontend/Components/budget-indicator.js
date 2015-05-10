@@ -17,7 +17,7 @@ var BudgetIndicator = React.createClass({
     }
 
     return (
-      <div key={this.props.id} className="budgetIndicator">
+      <div key={this.props.id} className="budget-indicator">
         <ProgressBar value={progressValue} classes={progressBarClasses}/>
         <label>{this.props.name}: &euro;{this.props.value} ( max &euro;{this.props.max} )</label>
       </div>

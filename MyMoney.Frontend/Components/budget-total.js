@@ -7,7 +7,7 @@ var BudgetTotal = React.createClass({
     }.bind(this));
 
     return (
-      <div className="panel panel-default totals">
+      <div className="panel panel-default budget-totals">
           <div className="panel-body">
               {items}
 

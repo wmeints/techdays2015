@@ -1,0 +1,10 @@
+@import "./elements/body.scss";
+@import "./components/budget-indicator.scss";
+@import "./components/income-indicator.scss";
+@import "./components/budget-totals.scss";
+@import "./components/page-control.scss";
+
+.enter-mutation-form #description {
+    width: 560px;
+}
+

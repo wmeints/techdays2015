@@ -20,6 +20,11 @@ var BudgetStatus = React.createClass({
 
     return (
         <div className="budget-status">
+          <div class="row">
+            <div class="col-xs-12">
+              <h1>Budget status</h1>
+            </div>
+          </div>
           <div className="row">
             <div className="col-xs-9">
               <div className="row">

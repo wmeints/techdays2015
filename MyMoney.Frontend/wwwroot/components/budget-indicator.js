@@ -17,7 +17,7 @@ var BudgetIndicator = React.createClass({displayName: "BudgetIndicator",
     }
 
     return (
-      React.createElement("div", {key: this.props.id, className: "budgetIndicator"}, 
+      React.createElement("div", {key: this.props.id, className: "budget-indicator"}, 
         React.createElement(ProgressBar, {value: progressValue, classes: progressBarClasses}), 
         React.createElement("label", null, this.props.name, ": €", this.props.value, " ( max €", this.props.max, " )")
       )
