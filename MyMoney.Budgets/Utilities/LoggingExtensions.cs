@@ -1,5 +1,4 @@
 using Microsoft.Framework.Logging;
-using Microsoft.Framework.Logging.Console;
 using Microsoft.Framework.DependencyInjection;
 
 namespace MyMoney.Budgets.Utilities {

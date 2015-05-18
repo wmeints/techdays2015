@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.ConfigurationModel;
 

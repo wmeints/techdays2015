@@ -21,6 +21,7 @@
   "frameworks": {
     "dnx451": {}
   },
+  "compilationOptions": { "languageVersion": "experimental" },
   "exclude": [
     "wwwroot",
     "node_modules",
