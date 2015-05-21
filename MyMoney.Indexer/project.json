@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "Microsoft.Net.Http": "2.2.29",
+    "Microsoft.Framework.ConfigurationModel": "1.0.0-beta4",
+    "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4",
+    "Newtonsoft.Json": "7.0.1-beta3"
+  },
+  "commands": {
+    "indexer": "MyMoney.Indexer"
+  },
+  "frameworks": {
+    "dnx451": {}
+  },
+  "compilationOptions": { "languageVersion": "experimental" }
+}
