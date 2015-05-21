@@ -1,28 +1,45 @@
 using System;
 using MyMoney.Budgets.Models;
 using Microsoft.Framework.ConfigurationModel;
-using RabbitMQ.Client;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
+using System.Globalization;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace MyMoney.Budgets.Services
 {
     public class BudgetEventPublisher : IBudgetEventPublisher, IDisposable
     {
-        private IConnection _connection;
-        private IModel _channel;
+        HttpClient client;
+        string hostAddress;
+        Uri hostUri;
+        string token;
 
         public BudgetEventPublisher(IConfiguration configuration)
         {
-            ConnectionFactory connectionFactory = new ConnectionFactory();
-            connectionFactory.Uri = configuration.Get("servicebus:connectionString");
+            hostAddress = "https://mymoney.servicebus.windows.net/";
+            hostUri = new Uri(hostAddress, UriKind.RelativeOrAbsolute);
 
-            _connection = connectionFactory.CreateConnection();
-            _channel = _connection.CreateModel();
-			
-			_channel.ExchangeDeclare("mymoney","direct",true);
+            HttpClientHandler handler = new HttpClientHandler();
+            client = new HttpClient(handler);
+
+            client.BaseAddress = hostUri;
+
+            string keyName = configuration.Get("servicebus:keyName");
+            string keyValue = configuration.Get("servicebus:keyValue");
+
+            client.DefaultRequestHeaders.Add("Authorization", CreateSASToken(keyName,keyValue));
         }
 
-        public void PublishMutation(Category category, Mutation mutation)
+        /// <summary>
+        /// Posts a new mutation to the indexing request queue
+        /// </summary>
+        /// <param name="category">Category for which the mutation is created</param>
+        /// <param name="mutation">Mutation that was created</param>
+        /// <returns>Returns the task for the operation</returns>
+        public async Task PublishMutation(Category category, Mutation mutation)
         {
             var messageBody = new
             {
@@ -32,26 +49,30 @@ namespace MyMoney.Budgets.Services
                 month = mutation.Month,
                 description = mutation.Description
             };
-			
-			byte[] messageBodyBytes = System.Text.Encoding.UTF8.GetBytes(
-				JsonConvert.SerializeObject(messageBody));
-			
-			_channel.BasicPublish("mymoney","mymoney.mutations",null, messageBodyBytes);
+
+            var messageContent = new StringContent(JsonConvert.SerializeObject(messageBody));
+            var response = await client.PostAsync("/indexingrequests/messages", messageContent);
         }
 
         public void Dispose()
         {
-            if (_channel != null)
-            {
-                _channel.Close();
-                _channel = null;
-            }
+            client.Dispose();
+        }
 
-            if (_connection != null)
-            {
-                _connection.Close();
-                _connection = null;
-            }
+        private string CreateSASToken(string keyName, string keyValue)
+        {
+            HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(keyValue));
+            TimeSpan fromEpochStart = DateTime.UtcNow - new DateTime(1970, 1, 1);
+
+            string expiry = Convert.ToString((int)fromEpochStart.TotalSeconds + 3600);
+            string stringToSign = Uri.EscapeDataString(hostAddress) + "\n" + expiry;
+
+            string signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(stringToSign)));
+
+            string sasToken = String.Format(CultureInfo.InvariantCulture, "SharedAccessSignature sr={0}&sig={1}&se={2}&skn={3}",
+                Uri.EscapeDataString(hostAddress), Uri.EscapeDataString(signature), expiry, keyName);
+
+            return sasToken;
         }
     }
 }

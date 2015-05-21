@@ -19,6 +19,7 @@ namespace MyMoney.Budgets
             services.AddLogging();
             services.AddConfiguration();
             services.AddRepositories();
+            services.AddApplicationServices();
         }
 
         // Configure is called after ConfigureServices is called.

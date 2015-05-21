@@ -4,6 +4,7 @@ using MyMoney.Budgets.Utilities;
 using MyMoney.Budgets.Models;
 using MyMoney.Budgets.Messages;
 using MongoDB.Bson;
+using MyMoney.Budgets.Services;
 
 namespace MyMoney.Budgets.Controllers
 {
@@ -12,16 +13,22 @@ namespace MyMoney.Budgets.Controllers
     {
         private ICategoryRepository _categoriesRepository;
         private IMutationRepository _mutationsRepository;
+        private IBudgetEventPublisher _budgetEventPublisher;
 
-        public MutationsController(ICategoryRepository categoriesRepository, IMutationRepository mutationsRepository)
+        public MutationsController(
+            ICategoryRepository categoriesRepository,
+            IMutationRepository mutationsRepository,
+            IBudgetEventPublisher budgetEventPublisher)
         {
             _categoriesRepository = categoriesRepository;
             _mutationsRepository = mutationsRepository;
+            _budgetEventPublisher = _budgetEventPublisher;
         }
-        
+
         [HttpGetAttribute]
-        public async Task<object> FindByYearAndMonth(int year, int month) {
-            return await _mutationsRepository.FindByYearAndMonth(year,month);
+        public async Task<object> FindByYearAndMonth(int year, int month)
+        {
+            return await _mutationsRepository.FindByYearAndMonth(year, month);
         }
 
         [HttpPostAttribute]
@@ -31,15 +38,19 @@ namespace MyMoney.Budgets.Controllers
             {
                 return await WithEntity(() => _categoriesRepository.FindById(ObjectId.Parse(request.Category)), async category =>
                 {
-					return await _mutationsRepository.Insert(new Mutation {
+                    var insertedMutation = await _mutationsRepository.Insert(new Mutation
+                    {
                         CategoryId = ObjectId.Parse(request.Category),
                         Amount = request.Amount,
                         Description = request.Description,
                         Year = year,
                         Month = month
                     });
-                    
-                    //TODO: Send the mutation to the service bus for indexing
+
+                    // Publish the mutation towards the service bus
+                    await _budgetEventPublisher.PublishMutation(category, insertedMutation);
+
+                    return insertedMutation;
                 });
             });
         }
