@@ -22,7 +22,7 @@ namespace MyMoney.Budgets.Controllers
         {
             _categoriesRepository = categoriesRepository;
             _mutationsRepository = mutationsRepository;
-            _budgetEventPublisher = _budgetEventPublisher;
+            _budgetEventPublisher = budgetEventPublisher;
         }
 
         [HttpGetAttribute]

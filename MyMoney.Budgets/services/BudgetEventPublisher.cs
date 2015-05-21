@@ -15,7 +15,8 @@ namespace MyMoney.Budgets.Services
         HttpClient client;
         string hostAddress;
         Uri hostUri;
-        string token;
+        string keyName;
+        string keyValue;
 
         public BudgetEventPublisher(IConfiguration configuration)
         {
@@ -27,10 +28,8 @@ namespace MyMoney.Budgets.Services
 
             client.BaseAddress = hostUri;
 
-            string keyName = configuration.Get("servicebus:keyName");
-            string keyValue = configuration.Get("servicebus:keyValue");
-
-            client.DefaultRequestHeaders.Add("Authorization", CreateSASToken(keyName,keyValue));
+            this.keyName = configuration.Get("servicebus:keyName");
+            this.keyValue = configuration.Get("servicebus:keyValue");
         }
 
         /// <summary>
@@ -50,8 +49,13 @@ namespace MyMoney.Budgets.Services
                 description = mutation.Description
             };
 
-            var messageContent = new StringContent(JsonConvert.SerializeObject(messageBody));
-            var response = await client.PostAsync("/indexingrequests/messages", messageContent);
+            var message = new HttpRequestMessage(HttpMethod.Post, "/mutations/messages");
+
+            message.Content = new StringContent(JsonConvert.SerializeObject(messageBody));
+            message.Headers.Add("Authorization", CreateSASToken(keyName, keyValue));
+
+            //var messageContent = new StringContent(JsonConvert.SerializeObject(messageBody));
+            await client.SendAsync(message);
         }
 
         public void Dispose()

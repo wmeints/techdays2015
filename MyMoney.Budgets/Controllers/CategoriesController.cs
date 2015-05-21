@@ -36,7 +36,7 @@ namespace MyMoney.Budgets.Controllers
             });
         }
 
-        [HttpPostAttribute("{id}")]
+        [HttpPostAttribute()]
         public async Task<object> Create([FromBodyAttribute] CreateCategoryRequest request)
         {
             return await WithValidator(() => ValidateCreateRequest(request), async () =>
