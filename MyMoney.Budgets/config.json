@@ -1,6 +1,10 @@
 {
-	"database": {
-		"hostName": "192.168.99.100",
-		"name": "mymoney-budgets-test"
-	}
+  "database": {
+    "hostName": "localhost",
+    "name": "mymoney-budgets-test"
+  },
+  "servicebus": {
+    "keyName": "MyMoneySender",
+    "keyValue": "pGpaxHwI5OnVjA78b0Qv/Koc/3zp/czWRLTB6szC1hs="
+  }
 }

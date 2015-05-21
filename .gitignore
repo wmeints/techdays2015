@@ -194,3 +194,6 @@ ModelManifest.xml
 
 # ReactJS
 .module-cache/
+
+# VS2015
+.vs/
