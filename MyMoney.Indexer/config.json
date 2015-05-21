@@ -1,7 +1,7 @@
 ﻿{
   "servicebus": {
     "keyName": "MyMoneyReceiver",
-    "keyValue": "iD0oPGqcsOYK0Kp0eUSDhyG38AGE/fk3N8zPRlsQJus="
+    "keyValue": ""
   },
   "elasticsearch": {
     "url":  "http://localhost:9200/",
