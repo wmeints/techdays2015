@@ -1,64 +1,111 @@
-var BudgetStatus = React.createClass({
-  render: function() {
-    var totals = [];
+(function(React) {
+  var BudgetStatus = React.createClass({
+    getInitialState: function() {
+      return {
+        budgets: []
+      }
+    },
+    componentDidMount: function() {
+      var currentDate = new Date();
+      var year = currentDate.getFullYear();
+      var month = currentDate.getMonth() + 1;
 
-    var totalEarned = 0.0;
-    var totalSpent = 0.0;
+      this.setState({
+        year: year,
+        month: month,
+        budgets: []
+      });
 
-    this.props.incomes.forEach(function(income) {
-      totalEarned += income.amount;
-    });
+      //TODO: Refactor this into a service
+      $.ajax({
+        url: myMoney.settings.apiUrl + '/api/mutations/' + year + '/' + month,
+        success: function(data) {
+          this.setState({
+            year: year,
+            month: month,
+            budgets: data
+          });
+        }.bind(this)
+      });
+    },
+    loadBudgetState: function() {
+      //TODO: Refactor this into a service
+      $.ajax({
+        url: myMoney.settings.apiUrl + '/api/mutations/' + this.state.year + '/' + this.state.month,
+        success: function(data) {
+          this.setState({
+            budgets: data
+          });
+        }.bind(this)
+      });
 
-    this.props.budgets.forEach(function(budget) {
-      totalSpent += budget.amountSpent;
-    });
+      return false;
+    },
+    yearChanged: function(evt) {
+      this.setState({
+        year: evt.target.value
+      });
+    },
+    monthChanged: function(evt) {
+      this.setState({
+        month: evt.target.value
+      });
+    },
+    render: function() {
+      var totals = [];
 
-    totals.push({ name: 'Earnings', value: totalEarned });
-    totals.push({ name: 'Spendings', value: totalSpent });
+      var totalEarned = 0.0;
+      var totalSpent = 0.0;
 
-    var result = totalEarned - totalSpent;
+      this.state.budgets.forEach(function(budget) {
+        totalSpent += budget.amountSpent;
+      });
 
-    return (
-        <div className="budget-status">
-          <div class="row">
-            <div class="col-xs-12">
-              <h1>Budget status</h1>
+      totals.push({ name: 'Earnings', value: totalEarned });
+      totals.push({ name: 'Spendings', value: totalSpent });
+
+      var result = totalEarned - totalSpent;
+
+      return (
+          <div className="budget-status">
+            <div className="row">
+              <div className="col-xs-12">
+                <h1>Budget status</h1>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-xs-9">
-              <div className="row">
-                <div className="col-xs-12">
-                  <h2>Income</h2>
-                  <Incomes items={this.props.incomes}/>
+            <div className="row">
+              <div className="col-xs-12">
+                <div className="panel panel-default">
+                  <div className="panel-body">
+                    <form className="form-inline budget-state-selector" onSubmit={this.loadBudgetState}>
+                      <div className="form-group">
+                        <label htmlFor="year">Year</label>
+                        <input type="text" className="form-control" name="year" id="year" value={this.state.year} onChange={this.yearChanged} />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="month">Month</label>
+                        <input type="text" className="form-control" name="month" id="month" value={this.state.month} onChange={this.monthChanged} />
+                      </div>
+                      <div className="form-group">
+                        <button className="btn btn-default" type="submit">Load</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-xs-12">
-                  <h2>Budgets</h2>
-                  <Budgets items={this.props.budgets}/>
-                </div>
+            </div>
+            <div className="row">
+              <div className="col-xs-12">
+                <Budgets items={this.state.budgets}/>
               </div>
             </div>
-            <div className="col-xs-3">
-              <h2>Total</h2>
-              <BudgetTotal items={totals} result={result}/>
-            </div>
           </div>
-        </div>
-    );
-  }
-});
+      );
+    }
+  });
 
-var BUDGETS = [
-  { id: 1, description: 'Hypotheek', maxAmountAvailable: 850, amountSpent: 650 },
-  { id: 3, description: 'Verzekeringen', maxAmountAvailable: 400, amountSpent: 114 },
-  { id: 4, description: 'Uit eten', maxAmountAvailable: 50, amountSpent: 120 }
-];
-var INCOMES = [
-  { id: 2, description: 'Loon Mike', amount: 4035 },
-  { id: 5, description: 'Loon Barbara', amount: 1500 },
-  { id: 6, description: 'Overige', amount: 250 }
-];
+  var component = React.render(<BudgetStatus/>, document.getElementById('budget-status-placeholder'));
 
-React.render(<BudgetStatus incomes={INCOMES} budgets={BUDGETS}/>, document.getElementById('budget-status-placeholder'));
+  window.myMoney = window.myMoney || {};
+  window.myMoney.budgetState = component;
+})(React);

@@ -31,6 +31,13 @@ body {
   margin-top: 30px;
 }
 
+.budget-state-selector label {
+  margin-right: 5px;
+}
+.budget-state-selector input[type='text'] {
+  margin-right: 5px;
+}
+
 .enter-mutation-form #description {
   width: 560px;
 }

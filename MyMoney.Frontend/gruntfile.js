@@ -12,6 +12,13 @@ module.exports = function (grunt) {
                 }
             }
         },
+        copy: {
+          scripts: {
+            files: [
+              { expand: true, cwd: './Scripts', src: ['./**'], dest: './wwwroot/scripts' }
+            ]
+          }
+        },
         sass: {
             compile: {
                 options: {
@@ -25,10 +32,11 @@ module.exports = function (grunt) {
     });
 
     // This command registers the default task which will install bower packages into wwwroot/lib
-    grunt.registerTask("default", ["bower:install", "sass:compile"]);
+    grunt.registerTask("default", ["bower:install", "sass:compile","copy:scripts"]);
 
     // The following line loads the grunt plugins.
     // This line needs to be at the end of this this file.
     grunt.loadNpmTasks("grunt-bower-task");
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 };

@@ -1,64 +1,111 @@
-var BudgetStatus = React.createClass({displayName: "BudgetStatus",
-  render: function() {
-    var totals = [];
+(function(React) {
+  var BudgetStatus = React.createClass({displayName: "BudgetStatus",
+    getInitialState: function() {
+      return {
+        budgets: []
+      }
+    },
+    componentDidMount: function() {
+      var currentDate = new Date();
+      var year = currentDate.getFullYear();
+      var month = currentDate.getMonth() + 1;
 
-    var totalEarned = 0.0;
-    var totalSpent = 0.0;
+      this.setState({
+        year: year,
+        month: month,
+        budgets: []
+      });
 
-    this.props.incomes.forEach(function(income) {
-      totalEarned += income.amount;
-    });
+      //TODO: Refactor this into a service
+      $.ajax({
+        url: myMoney.settings.apiUrl + '/api/mutations/' + year + '/' + month,
+        success: function(data) {
+          this.setState({
+            year: year,
+            month: month,
+            budgets: data
+          });
+        }.bind(this)
+      });
+    },
+    loadBudgetState: function() {
+      //TODO: Refactor this into a service
+      $.ajax({
+        url: myMoney.settings.apiUrl + '/api/mutations/' + this.state.year + '/' + this.state.month,
+        success: function(data) {
+          this.setState({
+            budgets: data
+          });
+        }.bind(this)
+      });
 
-    this.props.budgets.forEach(function(budget) {
-      totalSpent += budget.amountSpent;
-    });
+      return false;
+    },
+    yearChanged: function(evt) {
+      this.setState({
+        year: evt.target.value
+      });
+    },
+    monthChanged: function(evt) {
+      this.setState({
+        month: evt.target.value
+      });
+    },
+    render: function() {
+      var totals = [];
 
-    totals.push({ name: 'Earnings', value: totalEarned });
-    totals.push({ name: 'Spendings', value: totalSpent });
+      var totalEarned = 0.0;
+      var totalSpent = 0.0;
 
-    var result = totalEarned - totalSpent;
+      this.state.budgets.forEach(function(budget) {
+        totalSpent += budget.amountSpent;
+      });
 
-    return (
-        React.createElement("div", {className: "budget-status"}, 
-          React.createElement("div", {class: "row"}, 
-            React.createElement("div", {class: "col-xs-12"}, 
-              React.createElement("h1", null, "Budget status")
-            )
-          ), 
-          React.createElement("div", {className: "row"}, 
-            React.createElement("div", {className: "col-xs-9"}, 
-              React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "col-xs-12"}, 
-                  React.createElement("h2", null, "Income"), 
-                  React.createElement(Incomes, {items: this.props.incomes})
-                )
-              ), 
-              React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "col-xs-12"}, 
-                  React.createElement("h2", null, "Budgets"), 
-                  React.createElement(Budgets, {items: this.props.budgets})
+      totals.push({ name: 'Earnings', value: totalEarned });
+      totals.push({ name: 'Spendings', value: totalSpent });
+
+      var result = totalEarned - totalSpent;
+
+      return (
+          React.createElement("div", {className: "budget-status"}, 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-xs-12"}, 
+                React.createElement("h1", null, "Budget status")
+              )
+            ), 
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-xs-12"}, 
+                React.createElement("div", {className: "panel panel-default"}, 
+                  React.createElement("div", {className: "panel-body"}, 
+                    React.createElement("form", {className: "form-inline budget-state-selector", onSubmit: this.loadBudgetState}, 
+                      React.createElement("div", {className: "form-group"}, 
+                        React.createElement("label", {htmlFor: "year"}, "Year"), 
+                        React.createElement("input", {type: "text", className: "form-control", name: "year", id: "year", value: this.state.year, onChange: this.yearChanged})
+                      ), 
+                      React.createElement("div", {className: "form-group"}, 
+                        React.createElement("label", {htmlFor: "month"}, "Month"), 
+                        React.createElement("input", {type: "text", className: "form-control", name: "month", id: "month", value: this.state.month, onChange: this.monthChanged})
+                      ), 
+                      React.createElement("div", {className: "form-group"}, 
+                        React.createElement("button", {className: "btn btn-default", type: "submit"}, "Load")
+                      )
+                    )
+                  )
                 )
               )
             ), 
-            React.createElement("div", {className: "col-xs-3"}, 
-              React.createElement("h2", null, "Total"), 
-              React.createElement(BudgetTotal, {items: totals, result: result})
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-xs-12"}, 
+                React.createElement(Budgets, {items: this.state.budgets})
+              )
             )
           )
-        )
-    );
-  }
-});
+      );
+    }
+  });
 
-var BUDGETS = [
-  { id: 1, description: 'Hypotheek', maxAmountAvailable: 850, amountSpent: 650 },
-  { id: 3, description: 'Verzekeringen', maxAmountAvailable: 400, amountSpent: 114 },
-  { id: 4, description: 'Uit eten', maxAmountAvailable: 50, amountSpent: 120 }
-];
-var INCOMES = [
-  { id: 2, description: 'Loon Mike', amount: 4035 },
-  { id: 5, description: 'Loon Barbara', amount: 1500 },
-  { id: 6, description: 'Overige', amount: 250 }
-];
+  var component = React.render(React.createElement(BudgetStatus, null), document.getElementById('budget-status-placeholder'));
 
-React.render(React.createElement(BudgetStatus, {incomes: INCOMES, budgets: BUDGETS}), document.getElementById('budget-status-placeholder'));
+  window.myMoney = window.myMoney || {};
+  window.myMoney.budgetState = component;
+})(React);
