@@ -1,5 +1,8 @@
 (function(React) {
-  var BudgetStatus = React.createClass({displayName: "BudgetStatus",
+  myMoney = window.myMoney = window.myMoney || {};
+  myMoney.components = myMoney.components || {};
+
+  myMoney.components.BudgetStatus = React.createClass({displayName: "BudgetStatus",
     getInitialState: function() {
       return {
         budgets: []
@@ -96,7 +99,7 @@
             ), 
             React.createElement("div", {className: "row"}, 
               React.createElement("div", {className: "col-xs-12"}, 
-                React.createElement(Budgets, {items: this.state.budgets})
+                React.createElement(myMoney.components.Budgets, {items: this.state.budgets})
               )
             )
           )
@@ -104,7 +107,7 @@
     }
   });
 
-  var component = React.render(React.createElement(BudgetStatus, null), document.getElementById('budget-status-placeholder'));
+  var component = React.render(React.createElement(myMoney.components.BudgetStatus, null), document.getElementById('budget-status-placeholder'));
 
   window.myMoney = window.myMoney || {};
   window.myMoney.budgetState = component;

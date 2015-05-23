@@ -1,5 +1,8 @@
 (function(React) {
-  var BudgetStatus = React.createClass({
+  myMoney = window.myMoney = window.myMoney || {};
+  myMoney.components = myMoney.components || {};
+
+  myMoney.components.BudgetStatus = React.createClass({
     getInitialState: function() {
       return {
         budgets: []
@@ -96,7 +99,7 @@
             </div>
             <div className="row">
               <div className="col-xs-12">
-                <Budgets items={this.state.budgets}/>
+                <myMoney.components.Budgets items={this.state.budgets}/>
               </div>
             </div>
           </div>
@@ -104,7 +107,7 @@
     }
   });
 
-  var component = React.render(<BudgetStatus/>, document.getElementById('budget-status-placeholder'));
+  var component = React.render(<myMoney.components.BudgetStatus/>, document.getElementById('budget-status-placeholder'));
 
   window.myMoney = window.myMoney || {};
   window.myMoney.budgetState = component;

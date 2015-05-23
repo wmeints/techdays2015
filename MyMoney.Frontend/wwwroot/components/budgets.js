@@ -1,17 +1,22 @@
-var Budgets = React.createClass({displayName: "Budgets",
-  render: function() {
-    var items = [];
+(function(React) {
+  myMoney = window.myMoney = window.myMoney || {};
+  myMoney.components = myMoney.components || {};
 
-    this.props.items.forEach(function(budget) {
-      items.push(React.createElement(BudgetIndicator, {id: budget.id, name: budget.description, max: budget.maxAmountAvailable, value: budget.amountSpent}));
-    }.bind(this));
+  myMoney.components.Budgets = React.createClass({displayName: "Budgets",
+    render: function() {
+      var items = [];
 
-    return (
-      React.createElement("div", {className: "panel panel-default"}, 
-        React.createElement("div", {className: "panel-body"}, 
-          items
+      this.props.items.forEach(function(budget) {
+        items.push(React.createElement(myMoney.components.BudgetIndicator, {id: budget.id, name: budget.description, max: budget.maxAmountAvailable, value: budget.amountSpent}));
+      }.bind(this));
+
+      return (
+        React.createElement("div", {className: "panel panel-default"}, 
+          React.createElement("div", {className: "panel-body"}, 
+            items
+          )
         )
-      )
-    );
-  }
-});
+      );
+    }
+  });
+})(React);
