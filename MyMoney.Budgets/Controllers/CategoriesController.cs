@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using MyMoney.Budgets.Models;
@@ -21,7 +22,15 @@ namespace MyMoney.Budgets.Controllers
         [HttpGetAttribute]
         public async Task<object> FindAll()
         {
-            return await _categoriesRepository.FindAll();
+            var categories = await _categoriesRepository.FindAll();
+            return categories.Select(category =>
+            {
+                return new
+                {
+                    name = category.Name,
+                    id = category.Id
+                };
+            });
         }
 
         [HttpGetAttribute("{id}")]
@@ -31,7 +40,10 @@ namespace MyMoney.Budgets.Controllers
             {
                 return await WithEntity(() => _categoriesRepository.FindById(ObjectId.Parse(id)), category =>
                 {
-                    return Task.FromResult((object)category);
+                    return Task.FromResult((object)new {
+                      id = category.Id,
+                      name = category.Name
+                    });
                 });
             });
         }
@@ -41,11 +53,17 @@ namespace MyMoney.Budgets.Controllers
         {
             return await WithValidator(() => ValidateCreateRequest(request), async () =>
             {
-                return await _categoriesRepository.Insert(new Category
+                var result = await _categoriesRepository.Insert(new Category
                 {
                     Name = request.Name,
                     Type = (int)request.Type
                 });
+
+                return new
+                {
+                    id = result.Id,
+                    name = result.Name
+                };
             });
         }
 
@@ -59,7 +77,13 @@ namespace MyMoney.Budgets.Controllers
                     category.Name = request.Name;
                     category.Type = (int)request.Type;
 
-                    return await _categoriesRepository.Update(category);
+                    var updatedCategory = await _categoriesRepository.Update(category);
+
+                    return new
+                    {
+                        id = updatedCategory.Id,
+                        name = updatedCategory.Name
+                    };
                 });
             });
         }
