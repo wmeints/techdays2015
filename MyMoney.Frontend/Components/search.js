@@ -30,7 +30,7 @@
     },
     render: function() {
       var results = [];
-      var searchResultDisplay = <p></p>;
+      var searchResultDisplay = "";
 
       if(this.state.results.length > 0) {
         for(var i = 0; i < this.state.results.length; i++) {
@@ -71,7 +71,7 @@
           <div className="row">
             <div className="col-xs-12">
               <h1>Search results</h1>
-              <p>Found {this.state.results.length} items that match your query '{this.state.query}'</p>
+              <p className="text-muted">Found {this.state.results.length} items that match your query '{this.state.query}'</p>
             </div>
           </div>
           {searchResultDisplay}

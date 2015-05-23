@@ -30,7 +30,7 @@
     },
     render: function() {
       var results = [];
-      var searchResultDisplay = React.createElement("p", null);
+      var searchResultDisplay = "";
 
       if(this.state.results.length > 0) {
         for(var i = 0; i < this.state.results.length; i++) {
@@ -71,7 +71,7 @@
           React.createElement("div", {className: "row"}, 
             React.createElement("div", {className: "col-xs-12"}, 
               React.createElement("h1", null, "Search results"), 
-              React.createElement("p", null, "Found ", this.state.results.length, " items that match your query '", this.state.query, "'")
+              React.createElement("p", {className: "text-muted"}, "Found ", this.state.results.length, " items that match your query '", this.state.query, "'")
             )
           ), 
           searchResultDisplay
