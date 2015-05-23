@@ -1,10 +1,9 @@
-@inject IOptions<AppSettings> AppSettings
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewBag.Title - @AppSettings.Options.SiteTitle</title>
+        <title>@ViewBag.Title - MyMoney Budget Planner</title>
 
         <environment names="Development">
             <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.css" />
@@ -33,7 +32,16 @@
                         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-controller="Mutations" asp-action="Index" >Mutations</a></li>
                     </ul>
+
+                    <form class="navbar-form navbar-right" method="get" action="/Search">
+                      <div class="form-group">
+                        <input type="text" id="query" name="query" class="form-control" value="@Context.Request.Query["query"]"></input>
+                      </div>
+                      <button type="submit" id="searchbutton" class="btn btn-default">Search</button>
+                    </form>
                 </div>
+
+
             </div>
         </div>
         <div class="container body-content">

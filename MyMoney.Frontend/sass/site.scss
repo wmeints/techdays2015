@@ -6,3 +6,9 @@
 @import "./components/budget-state-selector.scss";
 @import "./components/enter-mutation-form.scss";
 @import "./components/mutations-state-selector.scss";
+
+@media (max-width: 767px) {
+  #searchbutton {
+    width: 100%;
+  }
+}

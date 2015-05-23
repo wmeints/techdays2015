@@ -74,4 +74,10 @@ body {
   margin-right: 5px;
 }
 
+@media (max-width: 767px) {
+  #searchbutton {
+    width: 100%;
+  }
+}
+
 /*# sourceMappingURL=site.css.map */
