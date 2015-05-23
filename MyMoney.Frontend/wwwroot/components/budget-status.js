@@ -109,6 +109,6 @@
 
   var component = React.render(React.createElement(myMoney.components.BudgetStatus, null), document.getElementById('budget-status-placeholder'));
 
-  window.myMoney = window.myMoney || {};
-  window.myMoney.budgetState = component;
+  myMoney.page = myMoney.page || {};
+  myMoney.page.budgetState = component;
 })(React);
