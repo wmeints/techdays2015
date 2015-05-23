@@ -7,4 +7,4 @@ RUN dnu restore
 
 EXPOSE 3000
 
-ENTRYPOINT [ "dnx", ".", "indexer"]
+ENTRYPOINT [ "dnx", ".", "run"]

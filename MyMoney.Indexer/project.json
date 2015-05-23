@@ -8,7 +8,7 @@
     "Newtonsoft.Json": "7.0.1-beta3"
   },
   "commands": {
-    "indexer": "MyMoney.Indexer"
+    "run": "run"
   },
   "frameworks": {
     "dnx451": {}

@@ -5,6 +5,6 @@ WORKDIR /app
 
 RUN dnu restore
 
-EXPOSE 3000 
-
+EXPOSE 5001
+ 
 ENTRYPOINT [ "dnx", ".", "kestrel"]

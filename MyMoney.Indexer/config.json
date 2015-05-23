@@ -1,5 +1,6 @@
 ﻿{
   "servicebus": {
+    "url": "https://mymoney.servicebus.windows.net/",
     "keyName": "MyMoneyReceiver",
     "keyValue": ""
   },
