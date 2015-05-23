@@ -4,11 +4,22 @@
 
   myMoney.components.Mutations = React.createClass({
     getInitialState: function() {
+      var currentDate = new Date();
+      var year = currentDate.getFullYear();
+      var month = currentDate.getMonth() + 1;
+
       return {
         year: 0,
         month: 0,
         mutations: [],
-        categories: []
+        categories: [],
+        newMutation: {
+          year: year,
+          month: month,
+          description: '',
+          amount: null,
+          category: null
+        }
       };
     },
     componentDidMount: function() {
@@ -124,7 +135,14 @@
               self.setState({
                 mutations: data,
                 year: self.state.newMutation.year,
-                month: self.state.newMutation.month
+                month: self.state.newMutation.month,
+                newMutation: {
+                  description: '',
+                  amount: 0,
+                  year: self.state.year,
+                  month: self.state.month,
+                  category: null
+                }
               });
             }
           });
@@ -188,19 +206,19 @@
                     </div>
                     <div className="form-group">
                       <label htmlFor="text" className="sr-only">Year</label>
-                      <input type="text" className="form-control" id="year" placeholder="Enter year" onChange={this.mutationYearChanged}/>
+                      <input type="text" className="form-control" id="year" autocomplete="false" placeholder="Enter year" value={this.state.newMutation.year} onChange={this.mutationYearChanged}/>
                     </div>
                     <div className="form-group">
                       <label htmlFor="month" className="sr-only">Month</label>
-                      <input type="text" className="form-control" id="month" placeholder="Enter month" onChange={this.mutationMonthChanged}/>
+                      <input type="text" className="form-control" id="month" autocomplete="false" placeholder="Enter month" value={this.state.newMutation.month} onChange={this.mutationMonthChanged}/>
                     </div>
                     <div className="form-group">
                       <label htmlFor="description" className="sr-only">Description</label>
-                      <input type="text" className="form-control" id="description" placeholder="Enter description" onChange={this.mutationDescriptionChanged}/>
+                      <input type="text" className="form-control" id="description" autocomplete="false" placeholder="Enter description" value={this.state.newMutation.description} onChange={this.mutationDescriptionChanged}/>
                     </div>
                     <div className="form-group">
                       <label htmlFor="amount" className="sr-only">Amount</label>
-                      <input type="text" className="form-control" id="amount" placeholder="Enter amount" onChange={this.mutationAmountChanged}/>
+                      <input type="text" className="form-control" id="amount" placeholder="Enter amount" autocomplete="false" value={this.state.newMutation.amount} onChange={this.mutationAmountChanged}/>
                     </div>
                     <button type="submit" className="btn btn-default">Save</button>
                   </form>
