@@ -55,20 +55,6 @@
       });
     },
     render: function() {
-      var totals = [];
-
-      var totalEarned = 0.0;
-      var totalSpent = 0.0;
-
-      this.state.budgets.forEach(function(budget) {
-        totalSpent += budget.amountSpent;
-      });
-
-      totals.push({ name: 'Earnings', value: totalEarned });
-      totals.push({ name: 'Spendings', value: totalSpent });
-
-      var result = totalEarned - totalSpent;
-
       return (
           <div className="budget-status">
             <div className="row">
