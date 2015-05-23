@@ -25,8 +25,6 @@ namespace MyMoney.Indexer
             message.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
 
             var response = await client.SendAsync(message);
-
-            Console.WriteLine(response.Content.ReadAsStringAsync());
         }
     }
 }

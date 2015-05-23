@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Microsoft.Framework.Logging;
 
 namespace MyMoney.Indexer
 {
@@ -11,6 +12,11 @@ namespace MyMoney.Indexer
     {
         public static void Main(string[] args)
         {
+            LoggerFactory loggerFactory = new LoggerFactory();
+            loggerFactory.AddConsole();
+
+            ILogger logger = loggerFactory.CreateLogger("Program");
+
             Configuration config = new Configuration();
             config.AddJsonFile("config.json");
 
@@ -19,8 +25,7 @@ namespace MyMoney.Indexer
             var typeName = config.Get("elasticsearch:type");
 
             var receiver = new MessageReceiver(config,
-                "https://mymoney.servicebus.windows.net/",
-                "mutations");
+                config.Get("servicebus:url"), "mutations");
 
             Console.WriteLine("Listening for events. Press Ctrl+C to exit.");
 
@@ -31,22 +36,22 @@ namespace MyMoney.Indexer
                     var task = receiver.ReceiveAsync();
                     task.ConfigureAwait(false);
 
-
                     var processTask = task.ContinueWith(previousTask =>
                     {
-                        if(previousTask.Exception != null)
+                        if (previousTask.Exception != null)
                         {
-                            Console.WriteLine(previousTask.Exception.Message);
+                            logger.LogError("Failed to receive mutation", previousTask.Exception);
                         }
 
-                        Console.WriteLine("[{0}] Received mutation.", DateTime.Now);
+                        logger.LogInformation("Received mutation.");
                         indexerClient.WriteAsync(indexName, typeName, previousTask.Result);
                     });
 
                     processTask.Wait();
-                } catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    logger.LogError("Failed to process mutation", ex);
                 }
             }
         }
