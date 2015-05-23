@@ -186,6 +186,21 @@
         );
       }
 
+      var mutationSearchResults = React.createElement("div", {className: "text-muted"}, "Sorry, there are not mutations for the given year/month combination");
+
+      if(mutations.length > 0) {
+        mutationSearchResults = React.createElement("table", {className: "table"}, 
+          React.createElement("thead", null, 
+            React.createElement("th", null, "Category"), 
+            React.createElement("th", null, "Description"), 
+            React.createElement("th", null, "Amount")
+          ), 
+          React.createElement("tbody", null, 
+            mutations
+          )
+        );
+      }
+
       return (
         React.createElement("div", {className: "mutations"}, 
           React.createElement("div", {className: "row"}, 
@@ -247,16 +262,7 @@
             React.createElement("div", {className: "col-xs-12"}, 
               React.createElement("div", {className: "panel panel-default enter-mutation-form"}, 
                 React.createElement("div", {className: "panel-body"}, 
-                  React.createElement("table", {className: "table"}, 
-                    React.createElement("thead", null, 
-                      React.createElement("th", null, "Category"), 
-                      React.createElement("th", null, "Description"), 
-                      React.createElement("th", null, "Amount")
-                    ), 
-                    React.createElement("tbody", null, 
-                      mutations
-                    )
-                  )
+                  mutationSearchResults
                 )
               )
             )

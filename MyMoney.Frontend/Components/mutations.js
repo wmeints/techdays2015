@@ -186,6 +186,21 @@
         );
       }
 
+      var mutationSearchResults = <div className="text-muted">Sorry, there are not mutations for the given year/month combination</div>;
+
+      if(mutations.length > 0) {
+        mutationSearchResults = <table className="table">
+          <thead>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Amount</th>
+          </thead>
+          <tbody>
+            {mutations}
+          </tbody>
+        </table>;
+      }
+
       return (
         <div className="mutations">
           <div className="row">
@@ -247,16 +262,7 @@
             <div className="col-xs-12">
               <div className="panel panel-default enter-mutation-form">
                 <div className="panel-body">
-                  <table className="table">
-                    <thead>
-                      <th>Category</th>
-                      <th>Description</th>
-                      <th>Amount</th>
-                    </thead>
-                    <tbody>
-                      {mutations}
-                    </tbody>
-                  </table>
+                  {mutationSearchResults}
                 </div>
               </div>
             </div>
