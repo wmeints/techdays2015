@@ -42,7 +42,5 @@
     "**.vspscc"
   ],
     "scripts": {
-        "postrestore": ["npm install", "bower install"],
-        "prepare": ["grunt default"]
     }
 }
