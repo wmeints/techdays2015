@@ -4,4 +4,5 @@
 
   // Configure the endpoint for the API here.
   myMoney.settings.apiUrl = 'http://localhost:3000';
+  myMoney.settings.searchApiUrl = 'http://localhost:4000';
 })();
