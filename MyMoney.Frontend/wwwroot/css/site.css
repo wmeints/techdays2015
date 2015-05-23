@@ -38,8 +38,40 @@ body {
   margin-right: 5px;
 }
 
+.enter-mutation-form label, .enter-mutation-form input, .enter-mutation-form select {
+  margin-right: 5px;
+}
 .enter-mutation-form #description {
-  width: 560px;
+  width: 556px;
+}
+.enter-mutation-form #year, .enter-mutation-form #month {
+  width: 87px;
+}
+
+@media (max-width: 1199px) {
+  .enter-mutation-form #description {
+    width: 356px;
+  }
+}
+@media (max-width: 991px) {
+  .enter-mutation-form #description {
+    width: 136px;
+  }
+}
+@media (max-width: 767px) {
+  .enter-mutation-form #description {
+    width: 100%;
+  }
+  .enter-mutation-form #year, .enter-mutation-form #month {
+    width: 100%;
+  }
+}
+.mutations-state-selector {
+  margin-bottom: 20px;
+  margin-top: 40px;
+}
+.mutations-state-selector label, .mutations-state-selector input {
+  margin-right: 5px;
 }
 
 /*# sourceMappingURL=site.css.map */

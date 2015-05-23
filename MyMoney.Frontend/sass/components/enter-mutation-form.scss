@@ -1,0 +1,42 @@
+.enter-mutation-form {
+  label, input, select {
+    margin-right: 5px;
+  }
+
+  #description {
+    width: 556px;
+  }
+
+  #year, #month {
+    width: 87px;
+  }
+}
+
+@media (max-width: 1199px) {
+  //361px
+  .enter-mutation-form {
+    #description {
+      width: 356px;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .enter-mutation-form {
+    #description {
+      width: 136px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .enter-mutation-form {
+    #description {
+      width: 100%;
+    }
+
+    #year, #month {
+      width: 100%;
+    }
+  }
+}

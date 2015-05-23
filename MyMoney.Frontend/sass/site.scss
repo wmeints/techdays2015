@@ -4,7 +4,5 @@
 @import "./components/budget-totals.scss";
 @import "./components/page-control.scss";
 @import "./components/budget-state-selector.scss";
-
-.enter-mutation-form #description {
-    width: 560px;
-}
+@import "./components/enter-mutation-form.scss";
+@import "./components/mutations-state-selector.scss";
