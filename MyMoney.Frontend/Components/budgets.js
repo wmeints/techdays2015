@@ -7,7 +7,7 @@
       var items = [];
 
       this.props.items.forEach(function(budget) {
-        items.push(<myMoney.components.BudgetIndicator id={budget.id} name={budget.description} max={budget.maxAmountAvailable} value={budget.amountSpent} />);
+        items.push(<myMoney.components.BudgetIndicator name={budget.name} max={budget.max} value={budget.amount} />);
       }.bind(this));
 
       return (

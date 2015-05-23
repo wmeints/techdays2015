@@ -21,7 +21,7 @@
 
       //TODO: Refactor this into a service
       $.ajax({
-        url: myMoney.settings.apiUrl + '/api/mutations/' + year + '/' + month,
+        url: myMoney.settings.apiUrl + '/api/state/' + year + '/' + month,
         success: function(data) {
           this.setState({
             year: year,
@@ -34,7 +34,7 @@
     loadBudgetState: function() {
       //TODO: Refactor this into a service
       $.ajax({
-        url: myMoney.settings.apiUrl + '/api/mutations/' + this.state.year + '/' + this.state.month,
+        url: myMoney.settings.apiUrl + '/api/state/' + this.state.year + '/' + this.state.month,
         success: function(data) {
           this.setState({
             budgets: data
