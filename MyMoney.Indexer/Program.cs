@@ -26,17 +26,28 @@ namespace MyMoney.Indexer
 
             while (true)
             {
-                var task = receiver.ReceiveAsync();
-                task.ConfigureAwait(false);
-                
-
-                var processTask = task.ContinueWith(previousTask =>
+                try
                 {
-                    Console.WriteLine("[{0}] Received mutation.",DateTime.Now);
-                    indexerClient.WriteAsync(indexName, typeName, previousTask.Result );
-                });
+                    var task = receiver.ReceiveAsync();
+                    task.ConfigureAwait(false);
 
-                processTask.Wait();
+
+                    var processTask = task.ContinueWith(previousTask =>
+                    {
+                        if(previousTask.Exception != null)
+                        {
+                            Console.WriteLine(previousTask.Exception.Message);
+                        }
+
+                        Console.WriteLine("[{0}] Received mutation.", DateTime.Now);
+                        indexerClient.WriteAsync(indexName, typeName, previousTask.Result);
+                    });
+
+                    processTask.Wait();
+                } catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
     }

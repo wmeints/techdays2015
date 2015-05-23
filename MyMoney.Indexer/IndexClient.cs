@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MyMoney.Indexer
@@ -20,12 +21,12 @@ namespace MyMoney.Indexer
         public async Task WriteAsync(string index, string type, dynamic data)
         {
             HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, "/" + index + "/" + type);
-            message.Headers.Add("Content-Type", "application/json");
-            message.Headers.Add("Accept", "application/json");
+            message.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            message.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
 
-            message.Content = new StringContent(JsonConvert.SerializeObject(data));
+            var response = await client.SendAsync(message);
 
-            await client.SendAsync(message);
+            Console.WriteLine(response.Content.ReadAsStringAsync());
         }
     }
 }

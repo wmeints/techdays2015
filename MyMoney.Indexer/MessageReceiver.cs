@@ -43,7 +43,8 @@ namespace MyMoney.Indexer
                 return data;
             } else
             {
-                throw new Exception("Failed to read message from queue");
+                string reason = response.ReasonPhrase;
+                throw new Exception("Failed to read message from queue: " + reason);
             }
         }
     }
