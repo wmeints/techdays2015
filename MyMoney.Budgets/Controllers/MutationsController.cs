@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using MyMoney.Budgets.Utilities;
@@ -28,7 +29,16 @@ namespace MyMoney.Budgets.Controllers
         [HttpGetAttribute]
         public async Task<object> FindByYearAndMonth(int year, int month)
         {
-            return await _mutationsRepository.FindByYearAndMonth(year, month);
+            var results = await _mutationsRepository.FindByYearAndMonth(year, month);
+            return results.Select(mutation => new
+            {
+                id = mutation.Id,
+                amount = mutation.Amount,
+                category = mutation.CategoryId,
+                description = mutation.Description,
+                year = mutation.Year,
+                month = mutation.Month
+            });
         }
 
         [HttpPostAttribute]
