@@ -95,6 +95,10 @@
 
   var component = React.render(<myMoney.components.BudgetStatus/>, document.getElementById('budget-status-placeholder'));
 
+  //HACK: Disable autocomplete for all components.
+  //It's annoying for the demo, but there's no good way to disable it through React.
+  $('input').attr('autocomplete','off');
+
   myMoney.page = myMoney.page || {};
   myMoney.page.budgetState = component;
 })(React);

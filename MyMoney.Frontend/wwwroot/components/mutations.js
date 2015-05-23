@@ -221,15 +221,15 @@
                     ), 
                     React.createElement("div", {className: "form-group"}, 
                       React.createElement("label", {htmlFor: "text", className: "sr-only"}, "Year"), 
-                      React.createElement("input", {type: "text", className: "form-control", id: "year", autocomplete: "false", placeholder: "Enter year", value: this.state.newMutation.year, onChange: this.mutationYearChanged})
+                      React.createElement("input", {type: "text", className: "form-control", id: "year", autocomplete: "off", placeholder: "Enter year", value: this.state.newMutation.year, onChange: this.mutationYearChanged})
                     ), 
                     React.createElement("div", {className: "form-group"}, 
                       React.createElement("label", {htmlFor: "month", className: "sr-only"}, "Month"), 
-                      React.createElement("input", {type: "text", className: "form-control", id: "month", autocomplete: "false", placeholder: "Enter month", value: this.state.newMutation.month, onChange: this.mutationMonthChanged})
+                      React.createElement("input", {type: "text", className: "form-control", id: "month", autocomplete: "off", placeholder: "Enter month", value: this.state.newMutation.month, onChange: this.mutationMonthChanged})
                     ), 
                     React.createElement("div", {className: "form-group"}, 
                       React.createElement("label", {htmlFor: "description", className: "sr-only"}, "Description"), 
-                      React.createElement("input", {type: "text", className: "form-control", id: "description", autocomplete: "false", placeholder: "Enter description", value: this.state.newMutation.description, onChange: this.mutationDescriptionChanged})
+                      React.createElement("input", {type: "text", className: "form-control", id: "description", autocomplete: "off", placeholder: "Enter description", value: this.state.newMutation.description, onChange: this.mutationDescriptionChanged})
                     ), 
                     React.createElement("div", {className: "form-group"}, 
                       React.createElement("label", {htmlFor: "amount", className: "sr-only"}, "Amount"), 
@@ -246,11 +246,11 @@
               React.createElement("form", {className: "form-inline mutations-state-selector", onSubmit: this.loadMutations}, 
                 React.createElement("div", {className: "form-group"}, 
                   React.createElement("label", {htmlFor: "year"}, "Year"), 
-                  React.createElement("input", {type: "text", className: "form-control", name: "year", id: "year", value: this.state.year, onChange: this.yearChanged})
+                  React.createElement("input", {type: "text", className: "form-control", name: "year", id: "year", autocomplete: "off", value: this.state.year, onChange: this.yearChanged})
                 ), 
                 React.createElement("div", {className: "form-group"}, 
                   React.createElement("label", {htmlFor: "month"}, "Month"), 
-                  React.createElement("input", {type: "text", className: "form-control", name: "month", id: "month", value: this.state.month, onChange: this.monthChanged})
+                  React.createElement("input", {type: "text", className: "form-control", name: "month", id: "month", autocomplete: "off", value: this.state.month, onChange: this.monthChanged})
                 ), 
                 React.createElement("div", {className: "form-group"}, 
                   React.createElement("button", {className: "btn btn-default", type: "submit"}, "Load")
@@ -273,6 +273,10 @@
   });
 
   var component = React.render(React.createElement(myMoney.components.Mutations, null), document.getElementById('mutations-placeholder'));
+
+  //HACK: Disable autocomplete for all components.
+  //It's annoying for the demo, but there's no good way to disable it through React.
+  $('input').attr('autocomplete','off');
 
   myMoney.page = myMoney.page || {};
   myMoney.page.mutations = component;

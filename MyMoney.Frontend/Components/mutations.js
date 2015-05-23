@@ -221,15 +221,15 @@
                     </div>
                     <div className="form-group">
                       <label htmlFor="text" className="sr-only">Year</label>
-                      <input type="text" className="form-control" id="year" autocomplete="false" placeholder="Enter year" value={this.state.newMutation.year} onChange={this.mutationYearChanged}/>
+                      <input type="text" className="form-control" id="year" autocomplete="off" placeholder="Enter year" value={this.state.newMutation.year} onChange={this.mutationYearChanged}/>
                     </div>
                     <div className="form-group">
                       <label htmlFor="month" className="sr-only">Month</label>
-                      <input type="text" className="form-control" id="month" autocomplete="false" placeholder="Enter month" value={this.state.newMutation.month} onChange={this.mutationMonthChanged}/>
+                      <input type="text" className="form-control" id="month" autocomplete="off" placeholder="Enter month" value={this.state.newMutation.month} onChange={this.mutationMonthChanged}/>
                     </div>
                     <div className="form-group">
                       <label htmlFor="description" className="sr-only">Description</label>
-                      <input type="text" className="form-control" id="description" autocomplete="false" placeholder="Enter description" value={this.state.newMutation.description} onChange={this.mutationDescriptionChanged}/>
+                      <input type="text" className="form-control" id="description" autocomplete="off" placeholder="Enter description" value={this.state.newMutation.description} onChange={this.mutationDescriptionChanged}/>
                     </div>
                     <div className="form-group">
                       <label htmlFor="amount" className="sr-only">Amount</label>
@@ -246,11 +246,11 @@
               <form className="form-inline mutations-state-selector" onSubmit={this.loadMutations}>
                 <div className="form-group">
                   <label htmlFor="year">Year</label>
-                  <input type="text" className="form-control" name="year" id="year" value={this.state.year} onChange={this.yearChanged} />
+                  <input type="text" className="form-control" name="year" id="year" autocomplete="off" value={this.state.year} onChange={this.yearChanged} />
                 </div>
                 <div className="form-group">
                   <label htmlFor="month">Month</label>
-                  <input type="text" className="form-control" name="month" id="month" value={this.state.month} onChange={this.monthChanged} />
+                  <input type="text" className="form-control" name="month" id="month" autocomplete="off" value={this.state.month} onChange={this.monthChanged} />
                 </div>
                 <div className="form-group">
                   <button className="btn btn-default" type="submit">Load</button>
@@ -273,6 +273,10 @@
   });
 
   var component = React.render(<myMoney.components.Mutations/>, document.getElementById('mutations-placeholder'));
+
+  //HACK: Disable autocomplete for all components.
+  //It's annoying for the demo, but there's no good way to disable it through React.
+  $('input').attr('autocomplete','off');
 
   myMoney.page = myMoney.page || {};
   myMoney.page.mutations = component;
