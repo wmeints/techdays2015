@@ -29,12 +29,17 @@ namespace MyMoney.Budgets.Controllers
         [HttpGetAttribute]
         public async Task<object> FindByYearAndMonth(int year, int month)
         {
+            var categories = await _categoriesRepository.FindAll();
             var results = await _mutationsRepository.FindByYearAndMonth(year, month);
+            
             return results.Select(mutation => new
             {
                 id = mutation.Id,
                 amount = mutation.Amount,
-                category = mutation.CategoryId,
+                category = new {
+                    id = mutation.CategoryId,
+                    name = categories.First(category => category.Id == mutation.CategoryId).Name
+                },
                 description = mutation.Description,
                 year = mutation.Year,
                 month = mutation.Month

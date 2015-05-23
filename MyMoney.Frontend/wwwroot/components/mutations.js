@@ -101,7 +101,9 @@
         month: evt.target.value
       });
     },
-    saveMutation: function() {
+    saveMutation: function(evt) {
+      evt.preventDefault();
+
       var self = this;
 
       $.ajax({
@@ -131,13 +133,39 @@
 
       return false;
     },
+    loadMutations: function(evt) {
+      evt.preventDefault();
+
+      $.ajax({
+        url: myMoney.settings.apiUrl + '/api/mutations/' + this.state.year + '/' + this.state.month,
+        method: 'GET',
+        success: function(data) {
+          this.setState({
+            mutations: data
+          });
+        }.bind(this)
+      });
+
+      return false;
+    },
     render: function() {
       var categories = [];
+      var mutations = [];
 
       categories.push(React.createElement("option", {value: ""}, "-"));
 
       for(var i = 0; i < this.state.categories.length; i++) {
         categories.push(React.createElement("option", {value: this.state.categories[i].id}, this.state.categories[i].name));
+      }
+
+      for(var j = 0; j < this.state.mutations.length; j++) {
+        mutations.push(
+          React.createElement("tr", null, 
+            React.createElement("td", null, this.state.mutations[j].category.name), 
+            React.createElement("td", null, this.state.mutations[j].description), 
+            React.createElement("td", null, this.state.mutations[j].amount)
+          )
+        );
       }
 
       return (
@@ -200,7 +228,17 @@
           React.createElement("div", {className: "row"}, 
             React.createElement("div", {className: "col-xs-12"}, 
               React.createElement("div", {className: "panel panel-default enter-mutation-form"}, 
-                React.createElement("div", {className: "panel-body"}
+                React.createElement("div", {className: "panel-body"}, 
+                  React.createElement("table", {className: "table"}, 
+                    React.createElement("thead", null, 
+                      React.createElement("th", null, "Category"), 
+                      React.createElement("th", null, "Description"), 
+                      React.createElement("th", null, "Amount")
+                    ), 
+                    React.createElement("tbody", null, 
+                      mutations
+                    )
+                  )
                 )
               )
             )

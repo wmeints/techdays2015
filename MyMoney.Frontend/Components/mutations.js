@@ -101,7 +101,9 @@
         month: evt.target.value
       });
     },
-    saveMutation: function() {
+    saveMutation: function(evt) {
+      evt.preventDefault();
+
       var self = this;
 
       $.ajax({
@@ -131,13 +133,39 @@
 
       return false;
     },
+    loadMutations: function(evt) {
+      evt.preventDefault();
+
+      $.ajax({
+        url: myMoney.settings.apiUrl + '/api/mutations/' + this.state.year + '/' + this.state.month,
+        method: 'GET',
+        success: function(data) {
+          this.setState({
+            mutations: data
+          });
+        }.bind(this)
+      });
+
+      return false;
+    },
     render: function() {
       var categories = [];
+      var mutations = [];
 
       categories.push(<option value=''>-</option>);
 
       for(var i = 0; i < this.state.categories.length; i++) {
         categories.push(<option value={this.state.categories[i].id}>{this.state.categories[i].name}</option>);
+      }
+
+      for(var j = 0; j < this.state.mutations.length; j++) {
+        mutations.push(
+          <tr>
+            <td>{this.state.mutations[j].category.name}</td>
+            <td>{this.state.mutations[j].description}</td>
+            <td>{this.state.mutations[j].amount}</td>
+          </tr>
+        );
       }
 
       return (
@@ -201,6 +229,16 @@
             <div className="col-xs-12">
               <div className="panel panel-default enter-mutation-form">
                 <div className="panel-body">
+                  <table className="table">
+                    <thead>
+                      <th>Category</th>
+                      <th>Description</th>
+                      <th>Amount</th>
+                    </thead>
+                    <tbody>
+                      {mutations}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
