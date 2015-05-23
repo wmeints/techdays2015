@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0-*",
+  "dependencies": {
+    "Microsoft.AspNet.Mvc": "6.0.0-beta4",
+    "Microsoft.AspNet.Server.IIS": "1.0.0-beta4",
+    "Microsoft.AspNet.Server.WebListener": "1.0.0-beta4",
+    "Microsoft.AspNet.StaticFiles": "1.0.0-beta4",
+    "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4",
+    "Microsoft.Framework.Logging.Console": "1.0.0-beta4",
+    "Kestrel": "1.0.0-beta4",
+    "Microsoft.AspNet.Diagnostics": "1.0.0-beta4",
+    "Microsoft.AspNet.Cors": "1.0.0-beta4",
+    "Microsoft.Net.Http": "2.2.29"
+  },
+  "commands": {
+    "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:4001",
+    "kestrel": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:4000"
+  },
+  "frameworks": {
+    "dnx451": {}
+  },
+  "compilationOptions": { "languageVersion": "experimental" }
+}
