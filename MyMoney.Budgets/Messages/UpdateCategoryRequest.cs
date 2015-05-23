@@ -4,8 +4,8 @@ namespace MyMoney.Budgets.Messages {
 	public class UpdateCategoryRequest {
 		[JsonPropertyAttribute("name")]
 		public string Name { get; set; }
-		
-		[JsonPropertyAttribute("type")]
-		public CategoryType Type { get; set; }
+				
+		[JsonPropertyAttribute("max")]
+		public double Max { get; set; }
 	}
 }

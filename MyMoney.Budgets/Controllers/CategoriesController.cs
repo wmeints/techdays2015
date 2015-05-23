@@ -28,7 +28,8 @@ namespace MyMoney.Budgets.Controllers
                 return new
                 {
                     name = category.Name,
-                    id = category.Id
+                    id = category.Id,
+                    max = category.Max
                 };
             });
         }
@@ -42,7 +43,8 @@ namespace MyMoney.Budgets.Controllers
                 {
                     return Task.FromResult((object)new {
                       id = category.Id,
-                      name = category.Name
+                      name = category.Name,
+                      max = category.Max
                     });
                 });
             });
@@ -56,13 +58,14 @@ namespace MyMoney.Budgets.Controllers
                 var result = await _categoriesRepository.Insert(new Category
                 {
                     Name = request.Name,
-                    Type = (int)request.Type
+                    Max = request.Max
                 });
 
                 return new
                 {
                     id = result.Id,
-                    name = result.Name
+                    name = result.Name,
+                    max = result.Max
                 };
             });
         }
@@ -75,14 +78,15 @@ namespace MyMoney.Budgets.Controllers
                 return await WithEntity(() => _categoriesRepository.FindById(ObjectId.Parse(id)), async category =>
                 {
                     category.Name = request.Name;
-                    category.Type = (int)request.Type;
+                    category.Max = request.Max;
 
                     var updatedCategory = await _categoriesRepository.Update(category);
 
                     return new
                     {
                         id = updatedCategory.Id,
-                        name = updatedCategory.Name
+                        name = updatedCategory.Name,
+                        max = updatedCategory.Max
                     };
                 });
             });
@@ -133,6 +137,11 @@ namespace MyMoney.Budgets.Controllers
                 results.AddError("description", "The provided description is empty." +
                     "Please provide a valid description");
             }
+            
+            if (request.Max < 0)
+            {
+                results.AddError("max","The maximum for a category must be greater or equal to zero");
+            }
 
             return results;
         }
@@ -145,6 +154,11 @@ namespace MyMoney.Budgets.Controllers
             {
                 results.AddError("description", "The provided description is empty." +
                     "Please provide a valid description");
+            }
+            
+            if (request.Max < 0)
+            {
+                results.AddError("max","The maximum for a category must be greater or equal to zero");
             }
 
             return results;

@@ -6,7 +6,7 @@ namespace MyMoney.Budgets.Messages {
 		[JsonPropertyAttribute("name")]
 		public string Name { get; set; }
 		
-		[JsonPropertyAttribute("type")]
-		public CategoryType Type { get; set; }
+		[JsonPropertyAttribute("max")]
+		public double Max { get; set; }
 	}
 }
